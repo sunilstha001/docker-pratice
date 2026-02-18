@@ -1,0 +1,73 @@
+Docker Compose is a tool used to run multi-container Docker applications using a single YAML file.
+
+Basic Example
+my-app/
+ ├── docker-compose.yml
+ ├── backend/
+ │     └── Dockerfile
+ └── frontend/
+       └── Dockerfile
+
+_________BASIC EXAMPLE________
+
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: mongo_db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: mern_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/mydatabase
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    container_name: mern_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
+
+
+__________Commands_________
+1. Start services
+- docker compose up
+- docker compose up -d (Run in background);
+
+2. Stop services
+-  docker compose down
+- docker compose down -v (Remove the volume also);
+
+3. Build services
+- docker compise build
+
+4. Start/Stop/restart existing conatiner 
+- docker compose start
+- docker compose stop
+- docker compose restart
+
+5. list running services
+- docker compose ps
+
+6. See the container logs
+- docker compose logs
+
+7. Remove stop container
+- docker compose rm
