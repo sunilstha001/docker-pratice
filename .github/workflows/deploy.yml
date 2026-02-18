@@ -1,13 +1,14 @@
-name : Deploy Nodejs Application
-on :
+name: Deploy Nodejs Application
+
+on:
   push:
     branches:
       - main
 
-
 jobs:
-  deploy
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -22,5 +23,3 @@ jobs:
             cd /home/sunil/docker-pratice
             git pull
             docker compose up -d --build
-
-          
