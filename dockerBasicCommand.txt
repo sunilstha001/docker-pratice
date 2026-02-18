@@ -1,0 +1,68 @@
+------------Working with images----------
+1. Build an Image from a Dockerfile
+- docker build -t <image_name>
+
+2. List local images
+- docker images
+
+3. Remove image
+- docker rmi <imagename>
+- docker rmi -f <imagename> (This is for forcefully delete image)
+
+4. Remove all unused images
+- docker image prune
+
+5. Download an image from Docker Hub.
+- docker pull <image>
+
+6. List all  the hidden images also
+- docker images -a
+
+
+------------Working with Container----------
+
+1. Create and start a container from an image.
+- docker run <image>
+
+2. Run container in detached mode (background).
+- docker run -d <image>
+
+3. Run container in interactive mode with a shell.
+- docker run -it <image>
+
+4. List running containers.
+- docker ps
+
+5. List all containers (including stopped ones).
+- docker ps -all
+
+6. Gracefully stop the container. Sends SIGTERM to do cleanup and sends SIGKILL if needed.
+- docker stop <container_id>
+
+7. Start/restart a stopped container. 
+- docker start/restart <container_id>
+
+8. Remove a container.
+- docker rm <container_id>
+
+9. Show logs of a running container.
+- docker logs <container_id>
+
+10. Remove all stopped containers.
+- docker prune
+
+11. Forcefully terminates a running container. Send SIGKILL to the container (kill -9).
+- docker kill <container_id>
+
+------------Best practices Commands----------
+
+1. Port mapping
+- docker run -p HOST_PORT:CONTAINER_PORT image_name
+- docker run -p 8080:80 <image name>
+- -p is publish a container port to the host
+
+2. Random
+- docker run -itd -P --rm my-app
+- (-i is interactive Keeps STDIN open so you can interact with the container.)
+- (-t Allocates a terminal.)
+- (-itd is interactive terminal in deatched mode)

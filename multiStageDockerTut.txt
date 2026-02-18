@@ -1,0 +1,57 @@
+# ---------- Stage 1: Build ----------
+FROM node:18 AS builder
+
+WORKDIR /app
+
+# copy package files
+COPY package*.json ./
+
+# install dependencies
+RUN npm install
+
+# copy source
+COPY . .
+
+# ---------- Stage 2: Production ----------
+FROM node:18-alpine
+
+WORKDIR /app
+
+# copy only needed files from builder
+COPY --from=builder /app /app
+
+# expose port
+EXPOSE 3000
+
+# start app
+CMD ["node", "server.js"]
+
+
+---------------------------How it Works-------------------------
+What is happening here
+🏗️ Stage 1 — builder
+FROM node:18 AS builder
+👉 installs dependencies
+👉 prepares app
+👉 temporary stage
+
+🚀 Stage 2 — production (final image)
+FROM node:18-alpine
+👉 lightweight image
+👉 only necessary files
+👉 smaller size
+
+🧠 Why we use --from=builder
+COPY --from=builder /app /app
+This means:
+"Copy built app from first stage into clean production image"
+
+
+FROM node:18 AS builder
+✅ What it means
+1. It names the first stage as builder
+2. Allows other stages to reference it
+3. Makes multi-stage copying possible
+AS builder assigns a name to the build stage so that we can 
+selectively copy artifacts from it into later stages using COPY --from=builder.
+
